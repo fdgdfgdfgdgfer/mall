@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.example</groupId>
+    <artifactId>mall</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>common</module>
+        <module>gateway</module>
+        <module>user</module>
+        <module>auth</module>
+        <module>order</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.encoding>UTF-8</project.encoding>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <java.version>8</java.version>
+        <!-- 核心依赖 -->
+        <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.6.RELEASE</spring-cloud-alibaba.version>
+
+        <!--分离出这两个东西，是为了能够在 spring cloud alibaba不更新的时候，及时更新-->
+        <seata.version>2.0.0</seata.version>
+        <nacos.version>2.2.4</nacos.version>
+
+        <!--分离出这两个东西，是为了能够在 spring cloud alibaba不更新的时候，及时更新-->
+        <seata.version>2.0.0</seata.version>
+        <nacos.version>2.0.3</nacos.version>
+
+        <!--        &lt;!&ndash; 次要依赖 &ndash;&gt;-->
+        <knife4j.version>4.3.0</knife4j.version>
+        <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>1.4.7</pagehelper-spring-boot-starter.version>
+        <mysql.version>8.0.17</mysql.version>
+        <version>1.0-SNAPSHOT</version>
+        <knife4j-openapi2-spring-boot-starter>4.1.0</knife4j-openapi2-spring-boot-starter>
+        <commons-lang3>3.12.0</commons-lang3>
+        <fastjson>1.2.54</fastjson>
+        <spring-boot-starter-data-redis>2.1.7.RELEASE</spring-boot-starter-data-redis>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 核心依赖 -->
+            <!--spring boot-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring cloud alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- 次要依赖 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-spring-boot-starter.version}</version>
+            </dependency>
+            <!--引入本地jar包-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
+                <version>${knife4j-openapi2-spring-boot-starter}</version>
+            </dependency>
+            <!--常用工具类 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3}</version>
+            </dependency>
+            <!--序列化-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson}</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--    <build>-->
+    <!--        <finalName>${project.name}</finalName>-->
+    <!--        <pluginManagement>-->
+    <!--            <plugins>-->
+    <!--                <plugin>-->
+    <!--                    <groupId>org.springframework.boot</groupId>-->
+    <!--                    <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--                    <version>${spring-boot.version}</version>-->
+    <!--                    <executions>-->
+    <!--                        <execution>-->
+    <!--                            <goals>-->
+    <!--                                <goal>repackage</goal>-->
+    <!--                            </goals>-->
+    <!--                        </execution>-->
+    <!--                    </executions>-->
+    <!--                </plugin>-->
+    <!--            </plugins>-->
+    <!--        </pluginManagement>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>io.spring.javaformat</groupId>-->
+    <!--                <artifactId>spring-javaformat-maven-plugin</artifactId>-->
+    <!--                <version>${spring-javaformat.version}</version>-->
+    <!--            </plugin>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                <version>${maven-compiler-plugin.version}</version>-->
+    <!--                <configuration>-->
+    <!--                    <source>${java.version}</source>-->
+    <!--                    <target>${java.version}</target>-->
+    <!--                    <encoding>${project.encoding}</encoding>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-resources-plugin</artifactId>-->
+    <!--                <version>${maven-resources-plugin.version}</version>-->
+    <!--                <configuration>-->
+    <!--                    <encoding>${project.encoding}</encoding>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--        <resources>-->
+    <!--            <resource>-->
+    <!--                <directory>src/main/resources</directory>-->
+    <!--                <filtering>true</filtering>-->
+    <!--            </resource>-->
+    <!--        </resources>-->
+    <!--    </build>-->
+
+    <!--    <profiles>-->
+    <!--        &lt;!&ndash;使用 mvn clean package -Pprod 进行激活prod环境的配置，否则激活默认环境&ndash;&gt;-->
+    <!--        <profile>-->
+    <!--            <id>dev</id>-->
+    <!--            <properties>-->
+    <!--                &lt;!&ndash; 环境标识，需要与配置文件的名称相对应 &ndash;&gt;-->
+    <!--                <profiles.active>dev</profiles.active>-->
+    <!--                &lt;!&ndash;https://github.com/alibaba/nacos/issues/3460  默认的命名空间不要去设置namespace &ndash;&gt;-->
+    <!--                <nacos.namespace/>-->
+    <!--            </properties>-->
+    <!--            <activation>-->
+    <!--                &lt;!&ndash; 默认环境 &ndash;&gt;-->
+    <!--                <activeByDefault>true</activeByDefault>-->
+    <!--            </activation>-->
+    <!--        </profile>-->
+    <!--        <profile>-->
+    <!--            <id>test</id>-->
+    <!--            <properties>-->
+    <!--                <profiles.active>test</profiles.active>-->
+    <!--                <nacos.namespace>x</nacos.namespace>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--        <profile>-->
+    <!--            <id>prod</id>-->
+    <!--            <properties>-->
+    <!--                <profiles.active>prod</profiles.active>-->
+    <!--                <nacos.namespace>x</nacos.namespace>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--    </profiles>-->
+</project>

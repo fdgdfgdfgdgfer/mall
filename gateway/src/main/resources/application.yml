@@ -1,0 +1,46 @@
+server:
+  port: 88
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+    #网关配置
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+#            allowCredentials: true
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"  #允许在请求中携带的头信息
+            allowCredentials: true  # 是否允许携带cookie
+            maxAge: 360000 # 这次跨域检测的有效期
+      routes:
+        - id: coupon
+          uri: http://127.0.0.1:8011/                   #要去的请求地址
+          # uri: lb://mall-coupon                 #路由的目标地址 lb就是负载均衡，后面跟服务名称
+          predicates: # 路由断言，也就是判断请求是否符合路由规则的条件
+            #            - Query=url,coupon      # url 带有/coupon就去上方uri地址 例：url=coupon
+            - Path=/coupon/**      # url 这个是按照路径匹配，只要以/coupon开头就符合要求
+          #- After=2037-01-20T17:42:47.789-07:00[Asia/Shanghai]  # 这个时间之后可以访问
+          filters: # Spring提供的默认过滤器，
+            - AddRequestHeader=Token,token! # 添加请求头Token=token参数,优先级相同时defaultFilter（当前配置的） > 路由过滤器 > GlobalFilter的顺序执行
+
+        - id: member
+          uri: http://127.0.0.1:8033/          #要去的请求地址
+          # uri: lb://mall-member          #路由的目标地址 lb就是负载均衡，后面跟服务名称
+          predicates: # 路由断言，也就是判断请求是否符合路由规则的条件
+            #            - Query=url,member    # url 带有/coupon就去上方uri地址  url=member
+            - Path=/member/**      # url 这个是按照路径匹配，只要以/member开头就符合要求
+        - id: user
+          uri: http://127.0.0.1:8088/
+          predicates:
+            - Path=/user/**
+#           default-filters: # 全局所有服务都生效，
+#            - AddRequestHeader=Token,token! # 添加请求头Token=token参数,优先级相同时defaultFilter（当前配置的） > 路由过滤器 > GlobalFilter的顺序执行

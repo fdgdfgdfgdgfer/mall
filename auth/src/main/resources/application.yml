@@ -1,0 +1,61 @@
+server:
+  port: 8555
+  servlet:
+    #为了防止一会在服务之间跳转导致Cookie打架（因为所有服务地址都是localhost，都会存JSESSIONID）
+    #这里修改一下context-path，这样保存的Cookie会使用指定的路径，就不会和其他服务打架了
+    #但是注意之后的请求都得在最前面加上这个路径
+    context-path: /sso
+spring:
+  cloud:
+    sentinel:
+      transport:
+       dashboard: localhost:8080
+       web-context-unify: false
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 296e9c49-6e09-482f-bf1e-fc4f66380d12
+        enabled: true
+  application:
+    name: auth
+  datasource:
+    username: root
+    password: jsq123456
+    url: jdbc:p6spy:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowMultiQueries=true
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+mybatis-plus:
+  # entity包路径,自行修改
+  typeAliasesPackage: com.example.user.demos.web.model.entity
+  # enum包路径,自行修改
+  #  typeEnumsPackage: com.tunda.openai.common.enums
+  global-config:
+    db-config:
+      db-column-underline: true
+      # 逻辑删及设置默认值（deleted字段是数据库自定义字段）
+      logic-delete-field: deleted
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    mapUnderscoreToCamelCase: true
+    # log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl #开启sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 控制台 打印sql
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+
+knife4j:
+  enable: true
+  openapi:
+    title: "oauth2登录系统"
+    description: "打车商城信贷金融一体..."
+    email:
+    concat:
+    url:
+    version: v1.0.0
+    license:
+    license-url:
+    terms-of-service-url:
+    group:
+      g1:
+        group-name: APP API
+        api-rule: package
+        api-rule-resources:
+          - com.example.auth.controller
