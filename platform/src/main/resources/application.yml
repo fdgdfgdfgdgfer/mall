@@ -1,0 +1,88 @@
+server:
+  port: 8077
+spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8080
+      web-context-unify: false
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 296e9c49-6e09-482f-bf1e-fc4f66380d12
+        enabled: true
+  application:
+    name: user
+  datasource:
+    username: root
+    password: jsq123456
+    url: jdbc:p6spy:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true&allowMultiQueries=true
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+mybatis-plus:
+  # entity包路径,自行修改
+  typeAliasesPackage: com.example.user.demos.web.model.entity
+  # enum包路径,自行修改
+  #  typeEnumsPackage: com.tunda.openai.common.enums
+  global-config:
+    db-config:
+      db-column-underline: true
+      # 逻辑删及设置默认值（deleted字段是数据库自定义字段）
+      logic-delete-field: deleted
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    mapUnderscoreToCamelCase: true
+    # log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl #开启sql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 控制台 打印sql
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+knife4j:
+  enable: true
+  openapi:
+    title: "后台系统"
+    description: "打车商城信贷金融一体..."
+    email:
+    concat:
+    url:
+    version: v1.0.0
+    license:
+    license-url:
+    terms-of-service-url:
+    group:
+      g1:
+        group-name: APP API
+        api-rule: package
+        api-rule-resources:
+          - com.example.user.demos.web.controller
+#security:
+#  oauth2:
+#    client:
+#      #不多说了
+#      client-id: web
+#      client-secret: 654321
+#      #Token获取地址
+#      access-token-uri: http://localhost:8555/sso/oauth/token
+#      #验证页面地址
+#      user-authorization-uri: http://localhost:8555/sso/oauth/authorize
+#    resource:
+#      #Token信息获取和校验地址
+#      token-info-uri: http://localhost:8555/sso/oauth/check_token
+security:
+  oauth2:
+    client:
+      client-id: web
+      client-secret: 654321
+    resource:
+      # 因为资源服务器得验证你的Token是否有访问此资源的权限以及用户信息，所以只需要一个验证地址
+      token-info-uri: http://localhost:8555/sso/oauth/check_token
+      jwt:
+        key-value: wsyKey # 注意这里要跟验证服务器的密钥一致，这样算出来的签名才会一致
+feign:
+  client:
+    config:
+      default: # default 全局配置
+        loggerLevel: BASIC #日志级别，BASIC就是最基本的请求和响应信息
+  oauth2:
+    # 开启Oauth支持，这样就会在请求头中携带Token了
+    enabled: true
+    # 同时开启负载均衡支持
+    load-balanced: true
