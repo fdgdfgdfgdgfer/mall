@@ -58,7 +58,7 @@ public class AopLogAspect {
 //        jsonObject.put("log_type", "info");
         // 将日志信息投递到kafka中
         String log = requestJsonObject.toJSONString();
-      ListenableFuture<SendResult<String, Object>> send = kafkaTemplate.send("mayikt-log",log);
+      ListenableFuture<SendResult<String, Object>> send = kafkaTemplate.send("my-log",log);
 //        logContainer.addLog(log);
     }
     //
@@ -110,7 +110,7 @@ public class AopLogAspect {
         // 将日志信息投递到kafka中
         String log = requestJsonObject.toJSONString();
 //        logContainer.addLog(log);
-        kafkaTemplate.send("mayikt-log",log);
+        kafkaTemplate.send("my-log",log);
     }
 
     //
